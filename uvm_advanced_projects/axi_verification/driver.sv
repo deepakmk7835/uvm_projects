@@ -119,6 +119,45 @@ class driver extends uvm_driver#(transaction);
 		@(negedge bvalid);
 		vif.bready <= 0;
 	endtask
+
+	task fixBurstRd();
+		//WAC
+		vif.awaddr <= 0; //32-vif.address
+		vif.awvalid<= 0; //Indicates valid address on WAC
+		vif.awlen<=   0; //awlen+1 = transactions
+		vif.awburst<= 0; //Type of burst = 0 fixed, 1 incr, 2 wrap
+		vif.awsize<=  0; // Max number of bytes allowed per transaction for 4 bytes awsize = 2 i.e bytes = 2 ^ awsize
+		vif.awid <= 0;
+
+		//Write Data Channel (WDC)
+		
+		vif.wdata<= 0; //32-vif.data 
+		vif.wstrb<= 0; //Indicates which data lane has valid data
+		vif.wvalid<= 0; //Indicates valid data on WDC
+		vif.wid <= 0;
+		vif.wlast <= 0;
+		
+		//RAC
+
+		vif.araddr <= 5; //32-vif.address
+		vif.arvalid<= 1; //Indicates valid address on WAC
+		vif.arlen<=   7; //awlen+1 = transactions
+		vif.arburst<= 0; //Type of burst = 0 fixed, 1 incr, 2 wrap
+		vif.arsize<=  2; // Max number of bytes allowed per transaction for 4 bytes awsize = 2 i.e bytes = 2 ^ awsize
+		vif.arid <= t.arid;
+		
+		vif.rready <= 1;
+	
+		for(int i=0;i<(vif.arlen+1);i++)begin
+			@(posedge vif.arready);
+			@(posedge vif.clk);
+		end
+
+		@(negedge vif.rlast); //Indicates completion of write transaction
+		vif.rready <= 0;	
+		vif.arvalid <= 0;	
+		
+	endtask
 	
 	//Task for Fixed Write Read Burst
 	
