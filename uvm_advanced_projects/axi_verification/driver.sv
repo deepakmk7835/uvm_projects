@@ -28,6 +28,7 @@ class driver extends uvm_driver#(transaction);
 	//Task for RST DUT
 	
 	task rst_dut();
+		`uvm_info("DRV","Reset Detected...",UVM_NONE);
 		vif.rstn <= 0;
 		
 		//WAC
@@ -81,6 +82,7 @@ class driver extends uvm_driver#(transaction);
 	//Task for Fixed Write Burst
 	
 	task fixBurstWr();
+		`uvm_info("DRV","Fix Burst Write Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 5; //32-vif.address
 		vif.awvalid<= 1; //Indicates valid address on WAC
@@ -121,6 +123,7 @@ class driver extends uvm_driver#(transaction);
 	endtask
 
 	task fixBurstRd();
+		`uvm_info("DRV","Fix Burst Read Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 0; //32-vif.address
 		vif.awvalid<= 0; //Indicates valid address on WAC
@@ -162,6 +165,7 @@ class driver extends uvm_driver#(transaction);
 	//Increment Write TXN
 	
 	task incrBurstWr();
+		`uvm_info("DRV","Increment Burst Write Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 5; //32-vif.address
 		vif.awvalid<= 1; //Indicates valid address on WAC
@@ -202,6 +206,7 @@ class driver extends uvm_driver#(transaction);
 	endtask
 
 	task incrBurstRd();
+		`uvm_info("DRV","Increment Burst Read Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 0; //32-vif.address
 		vif.awvalid<= 0; //Indicates valid address on WAC
@@ -243,6 +248,7 @@ class driver extends uvm_driver#(transaction);
 	//Wrap Write Read TXN
 	
 	task wrapBurstWr();
+		`uvm_info("DRV","Wrap Burst Write Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 5; //32-vif.address
 		vif.awvalid<= 1; //Indicates valid address on WAC
@@ -283,6 +289,7 @@ class driver extends uvm_driver#(transaction);
 	endtask
 
 	task wrapBurstRd();
+		`uvm_info("DRV","Wrap Burst Read Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 0; //32-vif.address
 		vif.awvalid<= 0; //Indicates valid address on WAC
@@ -323,7 +330,8 @@ class driver extends uvm_driver#(transaction);
 
 	//Error Write
 	
-	task ErrWr();
+	task ErrWr(); 
+		`uvm_info("DRV","Error Write Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 128; //32-vif.address Since address is 128, this is out of range according to the design
 		vif.awvalid<= 1; //Indicates valid address on WAC
@@ -364,6 +372,7 @@ class driver extends uvm_driver#(transaction);
 	endtask
 
 	task ErrRd();
+		`uvm_info("DRV","Error Read Transaction Started...",UVM_NONE);
 		//WAC
 		vif.awaddr <= 0; //32-vif.address
 		vif.awvalid<= 0; //Indicates valid address on WAC
@@ -407,7 +416,9 @@ class driver extends uvm_driver#(transaction);
         task wrRdFixBurst();
 		vif.rstn <= 1'b1;
 		fixBurstWr();	
+		`uvm_info("DRV","Fix Burst Write Transaction Completed...",UVM_NONE);
 		fixBurstRd();
+		`uvm_info("DRV","Fix Burst Read Transaction Completed...",UVM_NONE);
 	endtask	
 	
 	//Task for Incremental Write Read Burst
@@ -415,7 +426,9 @@ class driver extends uvm_driver#(transaction);
 	task wrRdIncrBurst();
 		vif.rstn <= 1'b1;
 		incrBurstWr();	
+		`uvm_info("DRV","Increment Burst Write Transaction Completed...",UVM_NONE);
 		incrBurstRd();
+		`uvm_info("DRV","Increment Burst Read Transaction Completed...",UVM_NONE);
 	endtask
 
 	//Task for Wrap Write Read Burst
@@ -423,7 +436,9 @@ class driver extends uvm_driver#(transaction);
 	task wrRdWrapBurst();
 		vif.rstn <= 1'b1;
 		wrapBurstWr();	
+		`uvm_info("DRV","Wrap Burst Write Transaction Completed...",UVM_NONE);
 		wrapBurstRd();
+		`uvm_info("DRV","Wrap Burst Read Transaction Completed...",UVM_NONE);
 	endtask
 
 
@@ -432,11 +447,26 @@ class driver extends uvm_driver#(transaction);
 	task wrRdErr();
 		vif.rstn <= 1'b1;
 		ErrWr();	
+		`uvm_info("DRV","Error Write Transaction Completed...",UVM_NONE);
 		ErrRd();
+		`uvm_info("DRV","Error Read Transaction Completed...",UVM_NONE);
 	endtask
 
 	virtual task run_phase();
-
+		seq_item_port.get_next_item(t);
+		if(t.test_case == rstdut)begin
+			rst_dut();
+			`uvm_info("DRV","Reset Detected...",UVM_NONE);
+		end else if(t.test_case == wrRdFixBurst)begin
+			wrRdFixBurst();
+		end else if(t.test_case == wrRdIncrBurst)begin
+			wrRdIncrBurst();
+		end else if(t.test_case == wrRdWrapBurst)begin
+			wrRdWrapBurst();
+		end else if(t.test_case == wrRdErr)begin
+			wrRdErr();
+		end	
+		seq_item_port.item_done();
 	endtask
 
 endclass
