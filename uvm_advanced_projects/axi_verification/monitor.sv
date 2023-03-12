@@ -72,32 +72,32 @@ class monitor extends uvm_monitor #(transaction);
 			end
 
 			4'b0110:begin
-				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
+				arr[awaddr] = vif.wdata[15:8];
+				arr[awaddr+1] = vif.wdata[23:16];
 				addr = awaddr + 2;
 			end
 
 			4'b1100:begin
-				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
+				arr[awaddr] = vif.wdata[23:16];
+				arr[awaddr+1] = vif.wdata[31:24];
 				addr = awaddr + 2;
 			end
 
 			4'b1001:begin
 				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
+				arr[awaddr+1] = vif.wdata[31:24];
 				addr = awaddr + 2;
 			end
 
 			4'b1010:begin
-				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
+				arr[awaddr] = vif.wdata[15:8];
+				arr[awaddr+1] = vif.wdata[31:24];
 				addr = awaddr + 2;
 			end
 
 			4'b0101:begin
 				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
+				arr[awaddr+1] = vif.wdata[23:16];
 				addr = awaddr + 2;
 			end
 
@@ -109,23 +109,23 @@ class monitor extends uvm_monitor #(transaction);
 			end
 
 			4'b1110:begin
-				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
-				arr[awaddr+2] = vif.wdata[23:16];
+				arr[awaddr] = vif.wdata[15:8];
+				arr[awaddr+1] = vif.wdata[23:16];
+				arr[awaddr+2] = vif.wdata[31:24];
 				addr = awaddr + 3;
 			end
 
 			4'b1101:begin
 				arr[awaddr] = vif.wdata[7:0];
-				arr[awaddr+1] = vif.wdata[15:8];
-				arr[awaddr+2] = vif.wdata[23:16];
+				arr[awaddr+1] = vif.wdata[23:16];
+				arr[awaddr+2] = vif.wdata[31:24];
 				addr = awaddr + 3;
 			end
 
 			4'b1011:begin
 				arr[awaddr] = vif.wdata[7:0];
 				arr[awaddr+1] = vif.wdata[15:8];
-				arr[awaddr+2] = vif.wdata[23:16];
+				arr[awaddr+2] = vif.wdata[31:24];
 				addr = awaddr + 3;
 			end
 
