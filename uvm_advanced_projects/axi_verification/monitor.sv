@@ -430,7 +430,7 @@ class monitor extends uvm_monitor #(transaction);
 		endcase
 	endfunction
 
-	function bit [31:0] newAddressFix(input bit[3:0] wstrb, input bit[31:0]waddr);
+	function bit [31:0] nextAddressFix(input bit[3:0] wstrb, input bit[31:0]waddr);
 		case(wstrb)
 			4'b0001:begin
 				arr[awaddr] = vif.wdata[7:0];
@@ -509,7 +509,7 @@ class monitor extends uvm_monitor #(transaction);
 				arr[awaddr+3] = vif.wdata[31:24];
 			end
 		endcase
-		return addr;
+		return awaddr;
 	endfunction
 
 	virtual task run_phase(uvm_phase phase);
@@ -555,6 +555,15 @@ class monitor extends uvm_monitor #(transaction);
 	    else if(vif.resetn && vif.awaddr < 128 && vif.awburst == 2'b00)
 	    begin
 		     //Task to calculate next address with Fixed burst
+		 wait(vif.awvalid == 1'b1);
+		 nextAddr = nextAddressFix(vif.wstrb, vif.awaddr);
+	         for(int i=0;i<vif.awlen;i++)begin
+			@(posedge vif.wready);
+		  	nextAddr = nextAddressFix(vif.wstrb, nextAddr);
+		 end
+ 		 
+		@(posedge vif.bvalid);
+		wrresp = vif.bresp;
 	    end 
 	          	      
 	 end      
