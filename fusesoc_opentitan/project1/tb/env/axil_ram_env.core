@@ -1,0 +1,18 @@
+CAPI=2:
+# Licensed under the Apache License, Version 2.0, see LICENSE for details.
+# SPDX-License-Identifier: Apache-2.0
+name: "axil_ram:dv:top_axil_ram_env:0.1"
+description: "AXI Lite RAM DV UVM test"
+filesets:
+  files_dv:
+    depend:
+      - 
+    files:
+      - axil_ram_env_pkg.sv
+      - axil_ram_env.sv
+    file_type: systemVerilogSource
+
+targets:
+  default:
+    filesets:
+      - files_dv
