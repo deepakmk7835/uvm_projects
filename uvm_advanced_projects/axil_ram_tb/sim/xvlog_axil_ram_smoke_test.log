@@ -1,0 +1,5 @@
+INFO: [VRFC 10-2263] Analyzing SystemVerilog file "H:/github/uvm_projects/uvm_advanced_projects/axil_ram_tb/tb/vcore/vcore_base_agt_cfg.sv" into library work
+ERROR: [VRFC 10-3805] use of undefined macro 'uvm_object_utils' [H:/github/uvm_projects/uvm_advanced_projects/axil_ram_tb/tb/vcore/vcore_base_agt_cfg.sv:2]
+ERROR: [VRFC 10-4982] syntax error near '(' [H:/github/uvm_projects/uvm_advanced_projects/axil_ram_tb/tb/vcore/vcore_base_agt_cfg.sv:2]
+ERROR: [VRFC 10-3516] mismatch in closing label 'get_enable_scb'; expected 'get_is_active' [H:/github/uvm_projects/uvm_advanced_projects/axil_ram_tb/tb/vcore/vcore_base_agt_cfg.sv:10]
+ERROR: [VRFC 10-3516] mismatch in closing label 'set_enable_cov'; expected 'set_is_active' [H:/github/uvm_projects/uvm_advanced_projects/axil_ram_tb/tb/vcore/vcore_base_agt_cfg.sv:14]

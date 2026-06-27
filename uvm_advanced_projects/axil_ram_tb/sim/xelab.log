@@ -1,0 +1,5 @@
+Vivado Simulator v2022.2
+Copyright 1986-1999, 2001-2022 Xilinx, Inc. All Rights Reserved.
+Running: C:/Xilinx/Vivado/2022.2/bin/unwrapped/win64.o/xelab.exe -L uvm --timescale 1ns/1ps --snapshot axil_ram_snap --log xelab.log axil_ram_tb 
+Multi-threading is on. Using 2 slave threads.
+ERROR: [XSIM 43-3225] Cannot find design unit work.axil_ram_tb in library work located at xsim.dir/work.

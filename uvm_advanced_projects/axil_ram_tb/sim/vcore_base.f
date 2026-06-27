@@ -1,0 +1,11 @@
+../tb/vcore/vcore_base_agt_cfg.sv
+../tb/vcore/vcore_base_env_cfg.sv
+../tb/vcore/vcore_base_seqr.sv
+../tb/vcore/vcore_base_driver.sv
+../tb/vcore/vcore_base_monitor.sv
+../tb/vcore/vcore_base_agent.sv
+../tb/vcore/vcore_base_scb.sv
+../tb/vcore/vcore_base_env.sv
+../tb/vcore/vcore_base_vseq.sv
+../tb/vcore/vcore_base_test.sv
+../tb/vcore/vcore_pkg.sv
